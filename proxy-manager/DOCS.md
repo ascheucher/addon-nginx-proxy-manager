@@ -82,6 +82,21 @@ cleared automatically_
   by taking a snapshot of just the Nginx Proxy Manager add-on, will not
   contain the data from this add-on. Please make sure you backup both
   the Nginx Proxy Manager and the MariaDB add-ons.
+- Every restart of this add-on changes the IP address of the container. Hence, 
+  it is advisable to add the docker subnet IP like `172.30.33.0/24` into your 
+  home assistant configuration.yaml like:
+  ```
+  http:
+  cors_allowed_origins:
+    - https://ha.example.org
+    - https://ha.home.example.org
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  ```
+  This prevents not reaching the web gui after every reboot.
 
 ## Changelog & Releases
 
